@@ -52,7 +52,7 @@ abstract class ACore
 				<div id="mainarea">
 					<div class="heading">
 						<div class="toplinks" style="padding-left:30px;">
-							<a href="option=main">Главная</a>
+							<a href="?option=main">Главная</a>
 						</div>
 						<div class="sap2">::</div>
 				';
