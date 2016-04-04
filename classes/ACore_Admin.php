@@ -84,6 +84,21 @@ abstract class ACore_Admin
         return $row;
     }
 
+
+    protected function get_text_statti($id){
+        $query = "SELECT id, title, description, text, date, img_src, cat FROM statti WHERE id='$id'";
+        $result = mysql_query($query);
+
+        if (!$result) {
+            exit(mysql_error());
+        }
+
+        $row = array();
+        $row = mysql_fetch_array($result, MYSQL_ASSOC);
+
+        return $row;
+    }
+
     public function get_body()
     {
         if($_POST){
