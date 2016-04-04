@@ -30,7 +30,7 @@ abstract class ACore_Admin
 					</div>;';
 
         echo '<div class="quick-links" >
-					<a href="?option=edit_statti">Статьи</a>
+					<a href="?option=admin">Статьи</a>
 					</div>';
 
         echo '<div class="quick-links" >
@@ -86,6 +86,9 @@ abstract class ACore_Admin
 
     public function get_body()
     {
+        if($_POST){
+            $this->obr();
+        }
         $this->get_header();
         $this->get_leftbar();
         $this->get_menu();
