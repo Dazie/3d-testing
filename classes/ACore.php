@@ -103,7 +103,7 @@ abstract class ACore
 
         foreach ($row as $item) {
             printf("<div class='toplinks'>
-			 				<a href='?option=menu?id_menu=%s'>%s</a>
+			 				<a href='?option=menu&id_menu=%s'>%s</a>
 			 			</div>", $item['id_menu'], $item['name_menu']);
 
             if ($j != count($row)) {

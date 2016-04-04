@@ -12,7 +12,7 @@ class menu extends ACore
             if (!$id_menu) {
                 echo "Неправильные данные для вывода статьи";
             } else {
-                $query = "SELECT id_menu, name_menu, text_menu FROM menu WHERE id_menu='$id_menu' ORDER BY date DESC";
+                $query = "SELECT id_menu, name_menu, text_menu FROM menu WHERE id_menu='$id_menu'";
                 $result = mysql_query($query);
                 if (!$result) {
                     exit(mysql_error());
@@ -21,12 +21,11 @@ class menu extends ACore
                     $row = array();
                     for ($i = 0; $i < mysql_num_rows($result); $i++) {
                         $row = mysql_fetch_array($result, MYSQL_ASSOC);
-                        printf("<div style='margin:10px; border-bottom:2px solid #c2c2c2; text-align:left;'>
+                        printf("<div style='margin:10px; text-align:left;'>
                         <p style='font-size:18px'>%s</p>
                         <p style='display: inline-block;'>%s</p>
-                        <p style='color:red; text-align: right;'><a href='?option=view&id_text=%s'>Читать далее...</a></p>
                     </div>
-                    ", $row['title'], $row['description'], $row['id']);
+                    ", $row['name_menu'], $row['text_menu']);
                     }
                 } else {
                     echo "В данной категории нет статей";
