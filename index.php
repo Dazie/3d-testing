@@ -4,6 +4,7 @@ header("Content-Type:text/html;charset=utf-8");
 
 require_once("config.php");
 require_once("classes/ACore.php");
+require_once("classes/ACore_Admin.php");
 
 if ($_GET['option']) {
 	$class = trim(strip_tags($_GET['option']));
