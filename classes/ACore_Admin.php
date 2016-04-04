@@ -67,6 +67,23 @@ abstract class ACore_Admin
 		    </html>";
     }
 
+    protected function get_categories()
+    {
+        $query = "SELECT id_category, name_category FROM category";
+        $result = mysql_query($query);
+
+        if (!$result) {
+            exit(mysql_error());
+        }
+
+        $row = array();
+        for ($i = 0; $i < mysql_num_rows($result); $i++) {
+            $row[] = mysql_fetch_array($result, MYSQL_ASSOC);
+        }
+
+        return $row;
+    }
+
     public function get_body()
     {
         $this->get_header();

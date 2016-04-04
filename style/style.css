@@ -207,3 +207,43 @@ a:hover {
     float: left;
 }
 
+.add_statti label{
+    display: block;
+    margin-bottom: 10px;
+    font-family: Open Sans;
+    font-weight: 600;
+}
+.add_statti textarea,
+.add_statti input[type="text"]{
+    border-radius: 10px;
+    border:2px solid #fdeaa9;
+    width: 100%;
+}
+.add_statti{
+    width: 500px;
+}
+.add_statti input[type="submit"]{
+    color: #ffffff;
+    border-radius: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition-duration: 0.5s;
+    margin: 0 auto;
+    background-color: rgba(161, 24, 28, 0.75);
+    border: 2px solid #7E0B0D;
+    display: block;
+    font-weight: bold;
+    font-family: Open Sans;
+}
+.add_statti input[type="submit"]:hover{
+    color: #ffd8d7;
+    background-color: #a1181c;
+    border: 2px solid #820504;
+}
+.add_statti select{
+    width: 150px;
+    border: 2px solid #fdeaa9;
+    border-radius: 10px;
+    padding: 5px;
+    font-weight: bold;
+}
