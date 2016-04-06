@@ -99,6 +99,20 @@ abstract class ACore_Admin
         return $row;
     }
 
+    protected function get_text_menu($id){
+        $query = "SELECT id_menu, name_menu, text_menu FROM menu WHERE id_menu='$id'";
+        $result = mysql_query($query);
+
+        if (!$result) {
+            exit(mysql_error());
+        }
+
+        $row = array();
+        $row = mysql_fetch_array($result, MYSQL_ASSOC);
+
+        return $row;
+    }
+
     public function get_body()
     {
         if($_POST || $_GET['del']){
