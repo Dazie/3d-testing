@@ -10,7 +10,10 @@ class add_statti extends ACore_Admin
             }
             $img_src = 'file/' . $_FILES['img_src']['name'];
         } else {
-            exit("Необходимо загрузить изображение");
+            //exit("Необходимо загрузить изображение");
+            echo "<script>";
+            echo "alert('Необходимо загрузить изображение')";
+            echo "</script>";
         }
         $title = $_POST['title'];
         $date = date("Y-m-d",time());

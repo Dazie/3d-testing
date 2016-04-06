@@ -101,7 +101,7 @@ abstract class ACore_Admin
 
     public function get_body()
     {
-        if($_POST){
+        if($_POST || $_GET['del']){
             $this->obr();
         }
         $this->get_header();

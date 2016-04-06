@@ -16,13 +16,17 @@ class admin extends ACore_Admin
         $row = array();
 
         echo "<a style='color:red' href='?option=add_statti'>Добавить новую статью</a><hr>";
+        if ($_SESSION['res']) {
+            echo($_SESSION['res']);
+            unset($_SESSION['res']);
+        }
 
         for ($i = 0; $i < mysql_num_rows($result); $i++) {
             $row = mysql_fetch_array($result, MYSQL_ASSOC);
             printf("<p style='font-size:14px; text-align: left;'>
                         <a style='color:#585858;' href='?option=update_statti&id_text=%s'>%s
                         </a>
-                        <a style='color: #560001; text-align: right; float: right;' href='?option=delete_statti&id_text=%s'>Удалить</a>
+                        <a style='color: #560001; text-align: right; float: right;' href='?option=delete_statti&del=%s'>Удалить</a>
                         </p>",
                 $row['id'], $row['title'], $row['id']);
         }

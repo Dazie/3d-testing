@@ -9,9 +9,9 @@ class update_statti extends ACore_Admin
                 exit("Не удалось загрузить изображение!");
             }
             $img_src = 'file/' . $_FILES['img_src']['name'];
-        } else {
-            exit("Необходимо загрузить изображение");
         }
+
+        $id = $_POST['id'];
         $title = $_POST['title'];
         $date = date("Y-m-d", time());
         $description = $_POST['description'];
@@ -21,17 +21,20 @@ class update_statti extends ACore_Admin
             exit("Не заполнены обязательные поля!");
         }
 
-        $query = " INSERT INTO statti
-						(title,img_src,date,text,description,cat)
-					VALUES ('$title','$img_src','$date','$text','$description','$cat')";
+        if($img_src!=''){
+            $query = "UPDATE statti SET title='$title', img_src='$img_src', date='$date', text='$text', description='$description', cat='$cat' WHERE id='$id'";
+        }else{
+            $query = "UPDATE statti SET title='$title', date='$date', text='$text', description='$description', cat='$cat' WHERE id='$id'";
+        }
+
+
         if (!mysql_query($query)) {
             exit(mysql_error());
         } else {
             $_SESSION['res'] = "Изменения сохранены";
-            header("Location:?option=add_statti");
-            exit();
+            header("Location:?option=admin");
+            exit;
         }
-
     }
 
     public function get_content()
@@ -54,6 +57,7 @@ class update_statti extends ACore_Admin
             <form class="add_statti" enctype="multipart/form-data" action="" method="post">
                 <label>Заголовок статьи<br>
                     <input type="text" name="title" value="$text[title]">
+                    <input type="hidden" name="id" value="$text[id]">
                 </label>
                 <label>Изображение:
                     <input type="file" name="img_src" value="$text[img_src]">
@@ -74,7 +78,6 @@ HEREDOC;
             } else {
                 echo "<option value='" . $item['id_category'] . "'>" . $item['name_category'] . "</option>";
             }
-
         }
 
         echo '</select></label>
