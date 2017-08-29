@@ -6,7 +6,7 @@ class edit_menu extends ACore_Admin
         $query = "SELECT id_menu, name_menu FROM menu";
         $result = mysql_query($query);
 
-        echo '<div id="main">';
+        echo '<div id="main" class="col-md-9">';
 
         if (!$result) {
             mysql_error();

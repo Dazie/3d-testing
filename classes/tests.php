@@ -5,8 +5,8 @@ class category extends ACore
     public function get_content()
     {
         echo '<div class="main" class="col-md-9">';
-        if (!$_GET['id_cat']) {
-            echo "Неправильные данные для вывода статьи";
+        if (!$_GET['id_test']) {
+            echo "Неправильные данные для вывода теста";
         } else {
             $id_cat = (int)$_GET['id_cat'];
             if (!$id_cat) {

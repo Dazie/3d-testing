@@ -7,6 +7,10 @@ abstract class ACore_Admin
 
     public function __construct()
     {
+        if (!$_SESSION['user']) {
+            header("Location:?option=login");
+        }
+
         $this->db = mysql_connect(HOST, USER, PASSWORD);
         if (!$this->db) {
             exit("Ошибка соединения с базой данных" . mysql_error());
@@ -24,47 +28,38 @@ abstract class ACore_Admin
 
     protected function get_leftbar()
     {
-        echo '<div class="quick-bg">
-					<div id="spacer" style="margin-bottom:15px;">
-						<div id="rc-bg" style="overflow: hidden; font-size:14px;">Разделы админки</div>
-					</div>;';
+        echo '<div class="left-menu">';
 
-        echo '<div class="quick-links" >
-					<a href="?option=admin">Статьи</a>
-					</div>';
+        echo '<h2>Изменить</h2>';
 
-        echo '<div class="quick-links" >
+        echo '<div class="left-menu__item" >
 					<a href="?option=edit_menu">Меню</a>
 					</div>';
 
-        echo '<div class="quick-links" >
+        echo '<div class="left-menu__item" >
 					<a href="?option=edit_category">Категории</a>
 					</div>';
+        echo '<div class="left-menu__item" >
+					<a href="?option=edit_tests">Тесты</a>
+					</div>';
+        echo '<h2>Информация</h2>';
+        echo '<div class="left-menu__item" >
+					<a href="?option=edit_category">Статистика</a>
+					</div>';
+        echo '</div>';
 
         echo '</div>';
     }
 
-    protected function get_menu()
+    protected function get_workarea()
     {
-        echo '
-				<div id="mainarea">
-					<div class="heading"></div>
-				';
+        echo '<div id="mainarea"><div class="wrapper"> <div class="col-md-3">';
+
     }
 
     protected function get_footer()
     {
-        echo '<div id="bottom">';
-
-        $j = 1;
-
-        echo "</div>
-		            <div class='copy'><span class='style1'> Copyright 2010 Тртрррт тртртрт </span>
-		            </div>
-		        </div>
-		    </center>
-		    </body>
-		    </html>";
+        include("footer.php");
     }
 
     protected function get_categories()
@@ -84,8 +79,51 @@ abstract class ACore_Admin
         return $row;
     }
 
+    protected function get_tests()
+    {
+        $query = "SELECT test_name, test_descr FROM tests";
+        $result = mysql_query($query);
 
-    protected function get_text_statti($id){
+        if (!$result) {
+            exit(mysql_error());
+        }
+
+        $row = array();
+        for ($i = 0; $i < mysql_num_rows($result); $i++) {
+            $row[] = mysql_fetch_array($result, MYSQL_ASSOC);
+        }
+
+        return $row;
+    }
+
+    protected function get_test_by_name($name){
+        $query = "SELECT test_id FROM tests WHERE test_name='$name'";
+        $result = mysql_query($query);
+
+        if (!$result) {
+            exit(mysql_error());
+        }
+
+        $id = mysql_fetch_array($result, MYSQL_ASSOC);
+
+        return $id['test_id'];
+    }
+
+    protected function get_question_by_text($text){
+        $query = "SELECT q_id FROM test_questions WHERE q_text='$text'";
+        $result = mysql_query($query);
+
+        if (!$result) {
+            exit(mysql_error());
+        }
+
+        $id = mysql_fetch_array($result, MYSQL_ASSOC);
+
+        return $id['q_id'];
+    }
+
+    protected function get_text_statti($id)
+    {
         $query = "SELECT id, title, description, text, date, img_src, cat FROM statti WHERE id='$id'";
         $result = mysql_query($query);
 
@@ -99,7 +137,8 @@ abstract class ACore_Admin
         return $row;
     }
 
-    protected function get_text_menu($id){
+    protected function get_text_menu($id)
+    {
         $query = "SELECT id_menu, name_menu, text_menu FROM menu WHERE id_menu='$id'";
         $result = mysql_query($query);
 
@@ -128,22 +167,35 @@ abstract class ACore_Admin
         return $row;
     }
 
-    protected function try_category_name($name){
+    protected function try_category_name($name)
+    {
         $cats = $this->get_categories();
-        foreach($cats as $item){
-            if($name==$item['name_category']){
+        foreach ($cats as $item) {
+            if ($name == $item['name_category']) {
                 return false;
             }
         }
     }
 
-    protected function try_category_use($id_category){
+    protected function try_test_name($name)
+    {
+        $tests = $this->get_tests();
+        foreach ($tests as $item) {
+            if ($name == $item['test_name']) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    protected function try_category_use($id_category)
+    {
         $query = "SELECT id, title FROM statti WHERE cat='$id_category'";
         $result = mysql_query($query);
 
-        if(!$result){
+        if (!$result) {
             return true;
-        }else{
+        } else {
             $row = array();
             $row = mysql_fetch_array($result, MYSQL_ASSOC);
 
@@ -153,12 +205,12 @@ abstract class ACore_Admin
 
     public function get_body()
     {
-        if($_POST || $_GET['del']){
+        if ($_POST || $_GET['del']) {
             $this->obr();
         }
         $this->get_header();
+        $this->get_workarea();
         $this->get_leftbar();
-        $this->get_menu();
         $this->get_content();
         $this->get_footer();
     }

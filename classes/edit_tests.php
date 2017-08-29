@@ -1,9 +1,10 @@
 <?php
 
-class edit_category extends ACore_Admin
+class edit_tests extends ACore_Admin
 {
-    public function get_content(){
-        $query = "SELECT id_category, name_category FROM category";
+    public function get_content()
+    {
+        $query = "SELECT test_id, test_name, test_descr FROM tests";
         $result = mysql_query($query);
 
         echo '<div id="main" class="col-md-9">';
@@ -11,15 +12,32 @@ class edit_category extends ACore_Admin
         if (!$result) {
             mysql_error();
         }
-        $row = array();
 
-        echo "<a style='color:red' href='?option=add_category'>Добавить новую категорию</a><hr>";
+        $arTests = [];
+
+        for ($i = 0; $i < mysql_num_rows($result); $i++) {
+            $arTests [] = mysql_fetch_array($result, MYSQL_ASSOC);
+        }
+
+        echo "<a class='add-button' href='?option=add_test'>Создать новый тест</a>";
         if ($_SESSION['res']) {
             echo($_SESSION['res']);
             unset($_SESSION['res']);
         }
+        if (!empty($arTests)) {
+            echo '<div class="tests_list"><ul>';
+            foreach ($arTests as $arTestItem) {
+                echo '<li><span class="test_name">' . $arTestItem['test_name'] . '</span>';
+                if (!empty($arTestItem['test_descr'])) {
+                    echo ' - <span>' . $arTestItem['test_descr'] . '</span></li>';
+                } else {
+                    echo '</li>';
+                };
+            }
+            echo '</ul></div>';
+        }
 
-        for ($i = 0; $i < mysql_num_rows($result); $i++) {
+        /*for ($i = 0; $i < mysql_num_rows($result); $i++) {
             $row = mysql_fetch_array($result, MYSQL_ASSOC);
             printf("<div style='font-size:14px; text-align: left; margin: 1em 0; position: relative;'>
                         <a style='color:#585858;' href='?option=update_category&id_text=%s'>%s
@@ -33,7 +51,7 @@ class edit_category extends ACore_Admin
                 printf("<a class='unactive'>Удалить</a>
                         <div class='unactive_info'>Невозможно удалить статью, так как она используется в статьях: %s</div></div>", $use['title']);
             }
-        }
-        echo "</div></div>";
+        }*/
+        echo "</div>";
     }
 }

@@ -4,15 +4,17 @@ class view extends ACore
 {
     public function get_content()
     {
-        echo "<div id='main'";
+        echo "<div id='main' class='col-md-7'>";
+        var_dump('ok');
         if(!$_GET['id_text']) {
             echo "Неправильные данные для вывода статьи";
         }else{
+
             $id_text = (int)$_GET['id_text'];
             if(!$id_text) {
                 echo "Неправильные данные для вывода статьи";
             }else{
-                $query = "SELECT title,text, date, id, img_src FROM statti WHERE id='$id_text'";
+                $query = "SELECT title, text, date, id, img_src FROM statti WHERE id='$id_text'";
                 $result = mysql_query($query);
                 if (!$result) {
                     exit(mysql_error());

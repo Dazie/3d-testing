@@ -10,7 +10,7 @@ class main extends ACore
             exit(mysql_error());
         }
 
-        echo '<div class="main">';
+        echo '<div class="col-md-7 main">';
 
         $row=array();
         for($i=0; $i < mysql_num_rows($result); $i++){

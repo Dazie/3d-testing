@@ -40,7 +40,7 @@ class add_statti extends ACore_Admin
     public function get_content()
     {
 
-        echo '<div id="main">';
+        echo '<div id="main" class="col-md-9">';
         if ($_SESSION['res']) {
             echo($_SESSION['res']);
             unset($_SESSION['res']);

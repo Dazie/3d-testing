@@ -22,54 +22,31 @@ abstract class ACore
         include("header.php");
     }
 
-    protected function get_leftbar()
-    {
-        $query = "SELECT id_category, name_category FROM category";
-        $result = mysql_query($query);
-        if (!$result) {
-            exit(mysql_error());
-        }
-
-        $row = array();
-        echo '<div class="quick-bg">
-					<div id="spacer" style="margin-bottom:15px;">
-						<div id="rc-bg">Menu</div>
-					</div>;';
-        for ($i = 0; $i < mysql_num_rows($result); $i++) {
-            $row = mysql_fetch_array($result, MYSQL_ASSOC);
-            printf("<div class='quick-links' >
-					» <a href='?option=category&id_cat=%s'>%s</a>
-					</div>", $row['id_category'], $row['name_category']);
-        }
-        echo "</div>";
-    }
-
     protected function get_menu()
     {
-        $row = $this->menu_array();
+        $menuArray = $this->menu_array();
 
-        echo '
-				<div id="mainarea">
-					<div class="heading">
-						<div class="toplinks" style="padding-left:30px;">
-							<a href="?option=main">Главная</a>
-						</div>
-						<div class="sap2">::</div>
-				';
-        $j = 1;
-
-        foreach ($row as $item) {
-            printf("<div class='toplinks'>
-			 				<a href='?option=menu&id_menu=%s'>%s</a>
-			 			</div>", $item['id_menu'], $item['name_menu']);
-
-            if ($j != count($row)) {
-                echo "<div class='sap2'>::</div>";
+        if (!empty($menuArray)) {
+            echo '<div class = "top-panel"><div class="wrapper"><div class="col-md-9 top-panel__menu"><ul class="list-unstyled"><li><a href="/" >Главная</a></li>';
+            foreach ($menuArray as $arMenuItem) {
+                echo '<li><a href="?option=menu&id_menu=' . $arMenuItem['id_menu'] . '">' . $arMenuItem['name_menu'] . '</a>';
             }
-            $j++;
-        }
 
-        echo "</div>";
+            if($_SESSION['user'] === true){
+                echo '</ul></div><div class="col-md-3 top-panel__login">
+                <a href="?option=cabinet">Вход</a>
+                <div class="separator"></div>
+                <a href="?option=exit">Выход</a>
+                </div></div></div>';
+            } else {
+                echo '</ul></div><div class="col-md-3 top-panel__login">
+            <a href="?option=login">Войти</a>
+            <div class="separator"></div>
+            <a href="?option=register">Зарегистрироваться</a>
+            </div></div></div>';
+            }
+
+        }
     }
 
     protected function menu_array()
@@ -88,46 +65,64 @@ abstract class ACore
         return $row;
     }
 
-    protected function get_footer()
+    protected function get_workarea()
     {
-        $row = $this->menu_array();
+        echo '<div id="mainarea"><div class="wrapper"> <div class="col-md-3"> ';
+        $this->get_left_menu();
+        echo '</div>';
 
-        echo '
-				<div id="bottom">
-				<div class="toplinks" style="padding-left:130px;">
-							<a href="?option=main">Главная</a>
-						</div>
-						<div class="sap2">::</div>
-				';
-        $j = 1;
+    }
 
-        foreach ($row as $item) {
-            printf("<div class='toplinks'>
-			 				<a href='?option=menu&id_menu=%s'>%s</a>
-			 			</div>", $item['id_menu'], $item['name_menu']);
-
-            if ($j != count($row)) {
-                echo "<div class='sap2'>::</div>";
-            }
-            $j++;
+    protected function get_left_menu()
+    {
+        $query = "SELECT id_category, name_category FROM category";
+        $result = mysql_query($query);
+        if (!$result) {
+            exit(mysql_error());
+        };
+        $arCategories = [];
+        for ($i = 0; $i < mysql_num_rows($result); $i++) {
+            $row = mysql_fetch_array($result, MYSQL_ASSOC);
+            $arCategories[] = $row;
         }
 
-        echo "</div>
-		            <div class='copy'><span class='style1'> Copyright 2010 Тртрррт тртртрт </span>
-		            </div>
-		        </div>
-		    </center>
-		    </body>
-		    </html>";
+        echo '<div class="left-menu">
+					<h2>Меню</h2>';
+        foreach ($arCategories as $arCategoryItem) {
+            echo '<div class = "left-menu__item"><a href="?option=category&id_cat=' .
+                $arCategoryItem['id_category'] .
+                '">' .
+                $arCategoryItem['name_category'] .
+                '</a></div>';
+        }
+        echo "</div>";
+    }
+
+    protected function get_footer()
+    {
+        include("footer.php");
     }
 
     public function get_body()
     {
-        $this->get_header();
-        $this->get_leftbar();
-        $this->get_menu();
-        $this->get_content();
-        $this->get_footer();
+        if ($_GET['option'] === 'login' || $_GET['option'] === 'register') {
+
+            if ($_POST || $_GET['del']) {
+                $this->obr();
+            }
+            $this->get_content();
+        } else {
+            if ($_POST || $_GET['del']) {
+                $this->obr();
+            }
+
+            $this->get_header();
+            $this->get_menu();
+            $this->get_workarea();
+            $this->get_content();
+            $this->get_footer();
+        }
+
     }
 
     abstract function get_content();
