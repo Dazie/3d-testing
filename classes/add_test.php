@@ -59,7 +59,7 @@ class add_test extends ACore_Admin
         $bAnswArea = false;
         $iterator=0;
         foreach ($postArray as $key => $item) {
-            echo '<pre>', var_dump($key, $keyQ), '</pre>';
+            //echo '<pre>', var_dump($key, $keyQ), '</pre>';
             if ($key === $keyQ) {
                 $bAnswArea = true;
             } elseif (strpos($key, 'test-question-') !== false && $bAnswArea === true) {
@@ -74,7 +74,7 @@ class add_test extends ACore_Admin
             }
 
         }
-        var_dump($arAnswers);
+        //var_dump($arAnswers);
 
         if (!empty($arAnswers)) {
             foreach ($arAnswers as $answer) {
@@ -158,8 +158,7 @@ class add_test extends ACore_Admin
         </div>
         <button type="button" class="btn btn-add-question">Добавить вопрос</button>
         <div class="clearfix"></div>
-        </div>
-        <input type="submit" class="btn btn-primary" name="button" value="Сохранить">
+        <input type="submit" class="btn btn-primary btn-save-test" name="button" value="Сохранить">
     </form>
             </div></div>
     ';

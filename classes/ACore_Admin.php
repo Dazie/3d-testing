@@ -30,6 +30,8 @@ abstract class ACore_Admin
     {
         echo '<div class="left-menu">';
 
+        echo '<h2 class="to-site"><a href="?option=main">На сайт</a></h2>';
+
         echo '<h2>Изменить</h2>';
 
         echo '<div class="left-menu__item" >

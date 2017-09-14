@@ -22,6 +22,20 @@ abstract class ACore
         include("header.php");
     }
 
+    protected function get_permission($idUser)
+    {
+        $query = "SELECT rights FROM users WHERE u_id='$idUser'";
+        $result = mysql_query($query);
+        if (!$result) {
+            return 'U';
+        }
+        for ($i = 0; $i < mysql_num_rows($result); $i++) {
+            $row = mysql_fetch_array($result, MYSQL_ASSOC);
+            return $row['rights'];
+        }
+        return 'U';
+    }
+
     protected function get_menu()
     {
         $menuArray = $this->menu_array();
@@ -29,12 +43,15 @@ abstract class ACore
         if (!empty($menuArray)) {
             echo '<div class = "top-panel"><div class="wrapper"><div class="col-md-9 top-panel__menu"><ul class="list-unstyled"><li><a href="/" >Главная</a></li>';
             foreach ($menuArray as $arMenuItem) {
-                echo '<li><a href="?option=menu&id_menu=' . $arMenuItem['id_menu'] . '">' . $arMenuItem['name_menu'] . '</a>';
+                echo '<li><a href="?option=' . $arMenuItem['symbol_link'] . '">' . $arMenuItem['name_menu'] . '</a>';
             }
 
-            if($_SESSION['user'] === true){
+            if ($_SESSION['user'] === true) {
+                if ($this->get_permission($_SESSION['userID']) === 'A'){
+                    echo '<li><a href="?option=admin">Административная панель</a></li>';
+                }
                 echo '</ul></div><div class="col-md-3 top-panel__login">
-                <a href="?option=cabinet">Вход</a>
+                <a href="?option=cabinet">Профиль</a>
                 <div class="separator"></div>
                 <a href="?option=exit">Выход</a>
                 </div></div></div>';
@@ -51,7 +68,7 @@ abstract class ACore
 
     protected function menu_array()
     {
-        $query = "SELECT id_menu, name_menu FROM menu";
+        $query = "SELECT id_menu, symbol_link, name_menu FROM menu";
         $result = mysql_query($query);
         if (!$result) {
             exit(mysql_error());
@@ -114,6 +131,10 @@ abstract class ACore
         } else {
             if ($_POST || $_GET['del']) {
                 $this->obr();
+            }
+
+            if ($_GET['option'] === 'exit') {
+                $_SESSION['user'] = false;
             }
 
             $this->get_header();

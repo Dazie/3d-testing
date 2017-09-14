@@ -6,7 +6,7 @@ require_once("config.php");
 require_once("classes/ACore.php");
 require_once("classes/ACore_Admin.php");
 
-if ($_GET['option']) {
+if ($_GET['option'] && $_GET['option'] !== 'exit') {
 	$class = trim(strip_tags($_GET['option']));
 } else {
 	$class = 'main';

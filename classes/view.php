@@ -5,7 +5,6 @@ class view extends ACore
     public function get_content()
     {
         echo "<div id='main' class='col-md-7'>";
-        var_dump('ok');
         if(!$_GET['id_text']) {
             echo "Неправильные данные для вывода статьи";
         }else{

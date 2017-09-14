@@ -3,16 +3,16 @@
  */
 $(document).ready(function () {
     var answNum = 2, questionNum = 2;
-    $('body').fallings({
+    /*$('body').fallings({
 
-        velocity: 0.5,
-        initialPosition: -200,
-        bgParallax: true,
-        bgPercent: "0%",
-        onClass: "fallings-visible",
-        offClass: "fallings-invisible"
+     velocity: 0.5,
+     initialPosition: -200,
+     bgParallax: true,
+     bgPercent: "0%",
+     onClass: "fallings-visible",
+     offClass: "fallings-invisible"
 
-    });
+     });*/
 
     $('body').on('click', '.btn-add-answ', function () {
         $(this).before('<div class="form-group">' +
@@ -40,9 +40,9 @@ $(document).ready(function () {
             '<div class="clearfix"></div>' +
             '<div class="answer-group">' +
             '<div class="form-group">' +
-            '<label for="test-answ-'+ answNum + '" class="col-md-3 control-label">Ответ '+ answNum + '</label>' +
+            '<label for="test-answ-' + answNum + '" class="col-md-3 control-label">Ответ ' + answNum + '</label>' +
             '<div class = "col-md-9">' +
-            '<input id="test-answ-'+ answNum + '" type="text" name="test-answ-'+ answNum + '" class="form-control">' +
+            '<input id="test-answ-' + answNum + '" type="text" name="test-answ-' + answNum + '" class="form-control">' +
             '</div>' +
             '</div>' +
             '<div class="form-group">' +
@@ -55,5 +55,25 @@ $(document).ready(function () {
             '</div>');
         questionNum++;
         answNum++;
+    });
+
+    $('body').on('click', '.test .test-final', function (e) {
+        e.preventDefault();
+        var formData = $('.custom-control-input:checked'), arrFormData = [];
+
+        formData.each(function (ind, elem) {
+            arrFormData.push({'name': $(elem).attr('id'), 'value': $(elem).val()});
+        });
+        arrFormData.push({'name':'time', 'value' :$('#time_start').val()});
+        console.log(arrFormData);
+        $.ajax({
+            type: "POST",
+            url: "../ajax/test_control.php",
+            cache: false,
+            data: arrFormData,
+            success: function (data) {
+                $('#main').html(data);
+            }
+        });
     });
 });

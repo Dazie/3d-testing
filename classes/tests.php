@@ -1,41 +1,29 @@
 <?
 
-class category extends ACore
+class tests extends ACore
 {
     public function get_content()
     {
-        echo '<div class="main" class="col-md-9">';
-        if (!$_GET['id_test']) {
-            echo "Неправильные данные для вывода теста";
-        } else {
-            $id_cat = (int)$_GET['id_cat'];
-            if (!$id_cat) {
-                echo "Неправильные данные для вывода статьи";
-            } else {
-                $query = "SELECT id, title, description, date, img_src FROM statti WHERE cat='$id_cat' ORDER BY date DESC";
-                $result = mysql_query($query);
-                if (!$result) {
-                    exit(mysql_error());
-                }
-                if (mysql_num_rows($result)) {
-                    $row = array();
-                    for ($i = 0; $i < mysql_num_rows($result); $i++) {
-                        $row = mysql_fetch_array($result, MYSQL_ASSOC);
-                        printf("<div style='margin:10px; border-bottom:2px solid #c2c2c2; text-align:left;'>
-                        <p style='font-size:18px'>%s</p>
-                        <p>%s</p>
-                        <p style='display: inline-block;'><img width='160px' align='left' style='margin-right:5px;' src='%s'>%s</p>
-                        <p style='color:red; text-align: right;'><a href='?option=view&id_text=%s'>Читать далее...</a></p>
-                    </div>
-                    ", $row['title'], $row['date'], $row['img_src'], $row['description'], $row['id']);
-                    }
-                } else {
-                    echo "В данной категории нет статей";
-                }
-            }
+        echo '<div class="main col-md-9">';
+
+        $query = "SELECT test_id, test_name, test_descr FROM tests ORDER BY test_id ASC";
+        $result = mysql_query($query);
+        if (!$result) {
+            exit(mysql_error());
         }
-        echo "</div></div>";
+        if (mysql_num_rows($result)) {
+            $row = array();
+            for ($i = 0; $i < mysql_num_rows($result); $i++) {
+                $row = mysql_fetch_array($result, MYSQL_ASSOC);
+                printf("<div class='test-block'>
+<p class='test-go col-md-2'><a href='?option=test&id_test=%s'>Пройти</a></p>
+                        <p class='col-md-10 test-name'>Название теста: %s</p>
+                        <p class='col-md-10 test-desc'>%s</p>
+                        <div class='clearfix'></div>
+                    </div>
+                    ", $row['test_id'], $row['test_name'], $row['test_descr']);
+            }
+            echo "</div></div>";
+        }
     }
 }
-
-;

@@ -17,6 +17,7 @@ class login extends ACore
             }
             if (mysql_num_rows($result) == 1) {
                 $_SESSION['user'] = true;
+                $_SESSION['userID'] = mysql_fetch_array($result, MYSQL_ASSOC)['u_id'];
                 header("Location:?option=admin");
                 exit();
             } else {

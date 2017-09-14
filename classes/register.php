@@ -30,6 +30,7 @@ class register extends ACore
                     exit(mysql_error());
                 } else {
                     $_SESSION['user'] = true;
+                    $_SESSION['userID'] = mysql_fetch_array($queryUser, MYSQL_ASSOC)['u_id'];
                     header("Location:/");
                     exit();
                 }

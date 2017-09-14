@@ -6,6 +6,7 @@
     <title>Мини-CMS. Обучающая система</title>
     <link href="plugins/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
     <link href="style/style.css" rel="stylesheet" type="text/css"/>
+    <link href="style/neon.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="plugins/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="plugins/bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript" src="plugins/parallax/jquery.fallings.js"></script>
