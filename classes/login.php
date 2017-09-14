@@ -10,7 +10,7 @@ class login extends ACore
         if (!empty($login) && !empty($password)) {
             $password = md5($password);
 
-            $query = "SELECT u_id FROM users WHERE login='$login' AND password='$password'";
+            $query = "SELECT u_id, rights FROM users WHERE login='$login' AND password='$password'";
             $result = mysql_query($query);
             if (!$result) {
                 exit(mysql_error());
@@ -18,7 +18,11 @@ class login extends ACore
             if (mysql_num_rows($result) == 1) {
                 $_SESSION['user'] = true;
                 $_SESSION['userID'] = mysql_fetch_array($result, MYSQL_ASSOC)['u_id'];
-                header("Location:?option=admin");
+                if(mysql_fetch_array($result, MYSQL_ASSOC)['rights'] === 'A'){
+                    header("Location:?option=admin");
+                } else {
+                    header("Location:?option=main");
+                }
                 exit();
             } else {
                 echo '<div class="alert alert-danger alert-dismissible fade in" role="alert">

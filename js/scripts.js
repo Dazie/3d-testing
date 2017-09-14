@@ -64,7 +64,9 @@ $(document).ready(function () {
         formData.each(function (ind, elem) {
             arrFormData.push({'name': $(elem).attr('id'), 'value': $(elem).val()});
         });
-        arrFormData.push({'name':'time', 'value' :$('#time_start').val()});
+        arrFormData.push({'name': 'user_id', 'value': $('#user_id').val()});
+        arrFormData.push({'name': 'test_id', 'value': $('#test_id').val()});
+        arrFormData.push({'name': 'time', 'value': $('#time_start').val()});
         console.log(arrFormData);
         $.ajax({
             type: "POST",
@@ -75,5 +77,18 @@ $(document).ready(function () {
                 $('#main').html(data);
             }
         });
+    });
+
+    $('body').on('click', '.user-card .edit', function (e) {
+        e.preventDefault();
+        $('.user-card input').prop('disabled', false);
+        $('.user-card .save').prop('disabled', false);
+    });
+
+    $(document).click(function (event) {
+        if ($(event.target).closest(".user-card input").length || $(event.target).closest(".user-card .edit").length || $(event.target).closest(".user-card .save").length) return;
+        $('.user-card input').prop('disabled', true);
+        $('.user-card .save').prop('disabled', true);
+        event.stopPropagation();
     });
 });

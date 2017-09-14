@@ -587,3 +587,76 @@ a {
     display: block;
     box-shadow: 1px 1px 4px 1px #000;
 }
+
+.user-card{
+    padding: 40px 20px;
+    background: #051535;
+    border-radius: 20px;
+    color: #5ddbfa;
+    text-transform: uppercase;
+    font-weight: 800;
+    text-shadow: 1px 1px 0px #012427, -1px -1px 0px #2d4067;
+    box-shadow: inset 1px 1px 8px 1px #04080e;
+}
+
+.user-card input[type='text'],
+.user-card input[type='password']{
+    background-color: #102a61 !important;
+    margin-bottom: 10px;
+    color: #41f7b5;
+    text-shadow: 1px 1px 5px #0dff8e;
+    border-bottom: 2px solid #041028;
+    border-right: 2px solid #041028;
+    box-shadow: inset 0px 0px 4px 0px #040b19;
+}
+
+.user-card input[type='text']:enabled,
+.user-card input[type='password']:enabled{
+    box-shadow: inset 0 0 10px 0 #064226;
+    background-color: rgba(3, 255, 124, 0.47) !important;
+    border-bottom: 2px solid #55f1c7;
+    border-right: 2px solid #55f1c7;
+    border-top: 2px solid #053e19;
+    border-left: 2px solid #053e19;
+    color: #1f8;
+}
+.user-card label{
+    margin-bottom:0;
+}
+
+.user-card button{
+    padding: 5px;
+    border: 2px solid #030e23;
+    border-radius: 5px;
+    color: #41f7b5;
+    text-shadow: 0px 0px 1px #00ff71;
+    margin-top: 10px;
+    box-shadow: inset 0 0 9px 1px #031029;
+}
+
+.user-card .edit{
+    background: rgba(32, 230, 189, 0.27);
+}
+
+.user-card .save{
+    background: rgba(77, 226, 201, 0.27);
+}
+
+.user-card .save:enabled{
+    -webkit-animation: neon6 1.5s ease-in-out infinite alternate;
+    -moz-animation: neon6 1.5s ease-in-out infinite alternate;
+    animation: neon6 1.5s ease-in-out infinite alternate;
+}
+
+.test-statistics{
+    margin: 0;
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
+.header-statistic{
+    margin-top: 0;
+    -webkit-animation: neon2 1.5s ease-in-out infinite alternate;
+    -moz-animation: neon2 1.5s ease-in-out infinite alternate;
+    animation: neon2 1.5s ease-in-out infinite alternate;
+}

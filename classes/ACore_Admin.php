@@ -46,7 +46,7 @@ abstract class ACore_Admin
 					</div>';
         echo '<h2>Информация</h2>';
         echo '<div class="left-menu__item" >
-					<a href="?option=edit_category">Статистика</a>
+					<a href="?option=statistics">Статистика</a>
 					</div>';
         echo '</div>';
 
@@ -98,7 +98,8 @@ abstract class ACore_Admin
         return $row;
     }
 
-    protected function get_test_by_name($name){
+    protected function get_test_by_name($name)
+    {
         $query = "SELECT test_id FROM tests WHERE test_name='$name'";
         $result = mysql_query($query);
 
@@ -111,7 +112,8 @@ abstract class ACore_Admin
         return $id['test_id'];
     }
 
-    protected function get_question_by_text($text){
+    protected function get_question_by_text($text)
+    {
         $query = "SELECT q_id FROM test_questions WHERE q_text='$text'";
         $result = mysql_query($query);
 
@@ -211,10 +213,29 @@ abstract class ACore_Admin
             $this->obr();
         }
         $this->get_header();
-        $this->get_workarea();
-        $this->get_leftbar();
-        $this->get_content();
-        $this->get_footer();
+        $userID = $_SESSION['userID'];
+        $query = "SELECT u_id, rights FROM users WHERE u_id='$userID'";
+        $result = mysql_query($query);
+        if (!$result) {
+            exit(mysql_error());
+        }
+        if (mysql_num_rows($result) == 1) {
+            if (mysql_fetch_array($result, MYSQL_ASSOC)['rights'] === 'U') {
+                echo '<div class="alert alert-danger alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>Ошибка!</strong> Отказано в доступе! <a href="/?option=main"> Вернуться на сайт</a>
+                </div>';
+            } else {
+
+                $this->get_workarea();
+                $this->get_leftbar();
+                $this->get_content();
+                $this->get_footer();
+            }
+        }
+
     }
 
     abstract function get_content();

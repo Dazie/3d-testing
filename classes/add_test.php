@@ -5,7 +5,6 @@ class add_test extends ACore_Admin
     public function obr()
     {
         $test_name = $_POST['test-name'];
-        $test_description = $_POST['test_description'];
 
         if (!$test_name) {
             echo '<div class="alert alert-danger alert-dismissible fade in" role="alert">

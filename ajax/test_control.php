@@ -13,6 +13,7 @@ mysql_query("SET NAMES 'UTF8'");
 $arAnswers = [];
 $arResult = [];
 $aNumRights = 0;
+$aNumErrors =0;
 $curTime= time();
 
 foreach ($_POST as $key => $answer){
@@ -32,6 +33,8 @@ foreach ($arAnswers as $id_answer => $text_answer){
         $answer = mysql_fetch_array($resultAnswers, MYSQL_ASSOC);
         if ($answer['a_correct'] === 'Y'){
             $aNumRights+= 1;
+        } else {
+            $aNumErrors +=1;
         }
         $arResult[] = $answer['a_correct'];
     }
@@ -55,5 +58,14 @@ foreach ($arResult as $answer){
 }
 echo '</tr>';
 echo '</table>';
+$timeAll=round((($curTime-(int)$_POST['time'])/60), 1);
+echo '<div class="test-result-header">Затрачено: '.$timeAll.' м.</div>';
 
-echo '<div class="test-result-header">Затрачено: '.round((($curTime-(int)$_POST['time'])/60), 1).' с.</div>';
+$userID=$_POST['user_id'];
+$testId = $_POST['test_id'];
+$queryTest = "INSERT INTO statistics
+                    (u_id, right_q, errors, test_id, time_test)
+                  VALUES ('$userID', '$aNumRights', '$aNumErrors', '$testId', '$timeAll')";
+if (!mysql_query($queryTest)) {
+    exit(mysql_error());
+}

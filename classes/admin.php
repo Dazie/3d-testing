@@ -5,6 +5,23 @@ class admin extends ACore_Admin
 
     public function get_content()
     {
+        $userID=$_SESSION['userID'];
+        $query = "SELECT u_id, rights FROM users WHERE u_id='$userID'";
+        $result = mysql_query($query);
+        if (!$result) {
+            exit(mysql_error());
+        }
+        if (mysql_num_rows($result) == 1) {
+            if(mysql_fetch_array($result, MYSQL_ASSOC)['rights'] === 'U'){
+                echo '<div class="alert alert-danger alert-dismissible fade in col-md-8" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>Ошибка!</strong> Отказано в доступе!
+                </div>';
+                exit();
+            }
+        }
         $query = "SELECT id, title FROM statti";
         $result = mysql_query($query);
 

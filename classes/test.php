@@ -82,6 +82,8 @@ class test extends ACore
                             } ?>
                         </div>
                         <input type="hidden" id="time_start" name="time_start" value="<?= time()?>">
+                        <input type="hidden" id="test_id" name="test_id" value="<?= $id_test?>">
+                        <input type="hidden" id="user_id" name="user_id" value="<?= $_SESSION['userID']?>">
                         <button class="test-final">Закончить тестирование</button>
                     </form>
                 <? } ?>
