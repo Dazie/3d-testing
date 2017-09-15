@@ -19,11 +19,11 @@ class view extends ACore
                     exit(mysql_error());
                 }
                 $row = mysql_fetch_array($result, MYSQL_ASSOC);
-                printf("<p>
+                printf("<div class='statti'>
                             <p style='font-size:18px'>%s</p>
                             <p>%s</p>
                             <p style='display: inline-block;'><img width='160px' align='left' style='margin-right:5px;' src='%s'>%s</p>
-                        </p>", $row['title'], $row['date'], $row['img_src'], $row['text']);
+                        </div>", $row['title'], $row['date'], $row['img_src'], $row['text']);
             }
         }
         

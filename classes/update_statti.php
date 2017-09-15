@@ -54,22 +54,22 @@ class update_statti extends ACore_Admin
         $cat = $this->get_categories();
 
         print <<<HEREDOC
-            <form class="add_statti" enctype="multipart/form-data" action="" method="post">
-                <label>Заголовок статьи<br>
-                    <input type="text" name="title" value="$text[title]">
+            <form class="add_statti col-md-6" enctype="multipart/form-data" action="" method="post">
+                <label for="title">Заголовок статьи</label>
+                    <input id="title" class="form-control" type="text" name="title" value="$text[title]">
                     <input type="hidden" name="id" value="$text[id]">
-                </label>
-                <label>Изображение:
-                    <input type="file" name="img_src" value="$text[img_src]">
-                </label>
+                
+                <label>Изображение:</label>
+                    <input class="form-control" type="file" name="img_src" value="$text[img_src]">
+                
                 <label>Краткое описание:<br>
-                    <textarea name="description" cols="50" rows="7">$text[description]</textarea>
+                    <textarea class="form-control" name="description" cols="50" rows="7">$text[description]</textarea>
                 </label>
                 <label>Текст:<br>
-                    <textarea name="text" cols="50" rows="7">$text[text]</textarea>
+                    <textarea class="form-control" name="text" cols="50" rows="7">$text[text]</textarea>
                 </label>
                 <label>Выберите категорию:
-                <select name="cat">
+                <select class="form-control" name="cat">
 
 HEREDOC;
         foreach ($cat as $item) {

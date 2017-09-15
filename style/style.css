@@ -14,7 +14,7 @@ body {
 }
 
 #header {
-    height: 205px;
+    height: 70px;
     background-size: cover;
     z-index: 9;
 }
@@ -22,6 +22,7 @@ body {
 #workarea {
     z-index: 9;
     position: relative;
+    min-height: 480px;
 }
 
 #mainarea {
@@ -37,6 +38,15 @@ body {
     width: 1200px;
     margin: 0 auto;
     height: 100%;
+}
+
+.footer{
+    background: rgba(8, 37, 74, 0.65);
+    box-shadow: 0px -5px 20px 0px #cdfcfa;
+    z-index: 999;
+    -webkit-animation: neon2 1.5s ease-in-out infinite alternate;
+    -moz-animation: neon2 1.5s ease-in-out infinite alternate;
+    animation: neon2 1.5s ease-in-out infinite alternate;
 }
 
 .top-panel {
@@ -294,13 +304,18 @@ a {
     border-top-right-radius: 15px;
 }
 
-.btn-add-answ {
+.btn-add-answ,
+.add_statti input[type="submit"]{
     margin: 10px 0;
     background: #6ae2ff;
     color: #14264b;
     font-weight: bolder;
     border: 3px solid #054552;
     text-transform: uppercase;
+}
+
+.add_statti input[type="submit"]{
+    padding: 5px 10px;
 }
 
 .btn-add-answ:hover {
@@ -588,7 +603,8 @@ a {
     box-shadow: 1px 1px 4px 1px #000;
 }
 
-.user-card{
+.user-card,
+.user-add{
     padding: 40px 20px;
     background: #051535;
     border-radius: 20px;
@@ -600,7 +616,9 @@ a {
 }
 
 .user-card input[type='text'],
-.user-card input[type='password']{
+.user-card input[type='password'],
+.user-add input[type='text'],
+.user-add input[type='password']{
     background-color: #102a61 !important;
     margin-bottom: 10px;
     color: #41f7b5;
@@ -611,38 +629,45 @@ a {
 }
 
 .user-card input[type='text']:enabled,
-.user-card input[type='password']:enabled{
+.user-card input[type='password']:enabled,
+.user-add input[type='text']:enabled,
+.user-add input[type='password']:enabled{
     box-shadow: inset 0 0 10px 0 #064226;
     background-color: rgba(3, 255, 124, 0.47) !important;
     border-bottom: 2px solid #55f1c7;
     border-right: 2px solid #55f1c7;
     border-top: 2px solid #053e19;
     border-left: 2px solid #053e19;
-    color: #1f8;
+    color: #1f8 !important;
 }
-.user-card label{
+.user-card label,
+.user-add label{
     margin-bottom:0;
 }
 
-.user-card button{
+.user-card button,
+.user-add button{
     padding: 5px;
     border: 2px solid #030e23;
     border-radius: 5px;
-    color: #41f7b5;
+    color: #41f7b5 !important;
     text-shadow: 0px 0px 1px #00ff71;
     margin-top: 10px;
     box-shadow: inset 0 0 9px 1px #031029;
 }
 
-.user-card .edit{
+.user-card .edit,
+.user-add .edit{
     background: rgba(32, 230, 189, 0.27);
 }
 
-.user-card .save{
+.user-card .save,
+.user-add .save{
     background: rgba(77, 226, 201, 0.27);
 }
 
-.user-card .save:enabled{
+.user-card .save:enabled
+.user-add .save:enabled{
     -webkit-animation: neon6 1.5s ease-in-out infinite alternate;
     -moz-animation: neon6 1.5s ease-in-out infinite alternate;
     animation: neon6 1.5s ease-in-out infinite alternate;
@@ -659,4 +684,95 @@ a {
     -webkit-animation: neon2 1.5s ease-in-out infinite alternate;
     -moz-animation: neon2 1.5s ease-in-out infinite alternate;
     animation: neon2 1.5s ease-in-out infinite alternate;
+}
+
+.user-add .save{
+    -webkit-animation: neon6 1.5s ease-in-out infinite alternate;
+    -moz-animation: neon6 1.5s ease-in-out infinite alternate;
+    animation: neon6 1.5s ease-in-out infinite alternate;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    text-transform: uppercase;
+    font-size: 1.2em;
+    color: #051535 !important;
+}
+
+.add-cat{
+    background: rgba(98, 227, 253, 0.63);
+    padding: 10px 15px;
+    border-radius: 10px;
+    color: #09224f;
+    font-weight: 800;
+    text-decoration: none;
+    font-size: 1.1em;
+    text-shadow: 0 0 5px #d8f9ff;
+}
+
+.add-cat:hover{
+    background: rgba(106, 230, 253, 0.74);
+}
+
+.add-cat-block {
+    font-size: 14px;
+    text-align: left;
+    margin: 30px 0;
+    position: relative;
+}
+
+.add-cat-block a:not(.del){
+    color: #c1f4ff;
+    background: rgba(19, 26, 42, 0.88);
+    text-decoration: none;
+    padding: 10px 15px;
+    margin-right: 30px;
+    border-radius: 5px;
+    -webkit-animation: neon2 1.5s ease-in-out infinite alternate;
+    -moz-animation: neon2 1.5s ease-in-out infinite alternate;
+    animation: neon2 1.5s ease-in-out infinite alternate;
+}
+
+.add-cat-block a.del{
+    -webkit-animation: neon1 1.5s ease-in-out infinite alternate;
+    -moz-animation: neon1 1.5s ease-in-out infinite alternate;
+    animation: neon1 1.5s ease-in-out infinite alternate;
+    color: #ffdfdf;
+}
+
+.unactive_info{
+    margin-top: 15px;
+    color: #d45757;
+    background: #ffcaca;
+    padding: 3px 8px;
+    border-radius: 5px;
+    border: 1px solid #9c2c2c;
+}
+
+
+.add-statti {
+
+}
+
+textarea {
+    color: #000;
+}
+
+.statti{
+    background: rgba(71, 198, 249, 0.82);
+    padding: 10px 20px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    font-weight: 800;
+    color: #fff;
+}
+
+.statti a{
+    -webkit-animation: neon2 1.5s ease-in-out infinite alternate;
+    -moz-animation: neon2 1.5s ease-in-out infinite alternate;
+    animation: neon2 1.5s ease-in-out infinite alternate;
+    color: #11827d;
+    background: rgba(255, 255, 255, 0.53);
+    padding: 3px 10px;
+    border-radius: 10px;
+    margin-top: 15px;
 }

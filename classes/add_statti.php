@@ -49,12 +49,11 @@ class add_statti extends ACore_Admin
 
         print <<<HEREDOC
             <form class="add_statti" enctype="multipart/form-data" action="" method="post">
-                <label>Заголовок статьи<br>
-                    <input type="text" name="title">
-                </label>
-                <label>Изображение:
-                    <input type="file" name="img_src">
-                </label>
+                <label for="title">Заголовок статьи</label>
+                    <input id="title" class="form-control" type="text" name="title">
+                <label for="img_src">Изображение:</label>
+                    <input class="form-control" id="img_src" type="file" name="img_src">
+               
                 <label>Краткое описание:<br>
                     <textarea name="description" cols="50" rows="7"></textarea>
                 </label>
@@ -62,7 +61,7 @@ class add_statti extends ACore_Admin
                     <textarea name="text" cols="50" rows="7"></textarea>
                 </label>
                 <label>Выберите категорию:
-                <select name="cat">
+                <select class="form-control" name="cat">
 
 HEREDOC;
         foreach ($cat as $item) {

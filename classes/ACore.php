@@ -104,7 +104,7 @@ abstract class ACore
         }
 
         echo '<div class="left-menu">
-					<h2>Меню</h2>';
+					<h2>Категории</h2>';
         foreach ($arCategories as $arCategoryItem) {
             echo '<div class = "left-menu__item"><a href="?option=category&id_cat=' .
                 $arCategoryItem['id_category'] .

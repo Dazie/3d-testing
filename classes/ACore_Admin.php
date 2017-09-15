@@ -42,7 +42,14 @@ abstract class ACore_Admin
 					<a href="?option=edit_category">Категории</a>
 					</div>';
         echo '<div class="left-menu__item" >
+					<a href="?option=add_statti">Добавить статью</a>
+					</div>';
+        echo '<div class="left-menu__item" >
 					<a href="?option=edit_tests">Тесты</a>
+					</div>';
+        echo '<h2>Пользователи</h2>';
+        echo '<div class="left-menu__item" >
+					<a href="?option=add_user">Добавить пользователя</a>
 					</div>';
         echo '<h2>Информация</h2>';
         echo '<div class="left-menu__item" >
@@ -67,6 +74,23 @@ abstract class ACore_Admin
     protected function get_categories()
     {
         $query = "SELECT id_category, name_category FROM category";
+        $result = mysql_query($query);
+
+        if (!$result) {
+            exit(mysql_error());
+        }
+
+        $row = array();
+        for ($i = 0; $i < mysql_num_rows($result); $i++) {
+            $row[] = mysql_fetch_array($result, MYSQL_ASSOC);
+        }
+
+        return $row;
+    }
+
+    protected function get_users()
+    {
+        $query = "SELECT u_id, login FROM users";
         $result = mysql_query($query);
 
         if (!$result) {
@@ -179,6 +203,7 @@ abstract class ACore_Admin
                 return false;
             }
         }
+        return true;
     }
 
     protected function try_test_name($name)
@@ -186,6 +211,17 @@ abstract class ACore_Admin
         $tests = $this->get_tests();
         foreach ($tests as $item) {
             if ($name == $item['test_name']) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    protected function try_user_name($name)
+    {
+        $tests = $this->get_users();
+        foreach ($tests as $item) {
+            if ($name == $item['login']) {
                 return false;
             }
         }

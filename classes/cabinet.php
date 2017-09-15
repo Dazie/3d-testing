@@ -76,6 +76,7 @@ class cabinet extends ACore
             echo '<tr><th>Название теста</th><th>Правильных ответов</th><th>Ошибок</th><th>Затрачено времени</th></tr>';
             if (mysql_num_rows($resultSt)) {
                 for ($i = 0; $i < mysql_num_rows($resultSt); $i++) {
+
                     $arResultSt = mysql_fetch_array($resultSt, MYSQL_ASSOC);
                     $test_id = $arResultSt['test_id'];
                     $queryTest = "SELECT test_id, test_name FROM tests WHERE test_id='$test_id'";

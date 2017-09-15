@@ -1,6 +1,6 @@
 <?
 
-class statistics extends ACore
+class statistics extends ACore_Admin
 {
     public function get_content()
     {

@@ -40,7 +40,7 @@ class update_category extends ACore_Admin
         print <<<HEREDOC
             <form class="add_statti"  action="" method="post">
                 <label>Наименование категории: <br>
-                    <input type="text" name="name_cat" value="$cats[name_category]">
+                    <input class="form-control" type="text" name="name_cat" value="$cats[name_category]">
                     <input type="hidden" name="id_category" value="$cats[id_category]">
                 </label>
                 <input type="submit" name="button" value="Сохранить">
