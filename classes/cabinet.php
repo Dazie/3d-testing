@@ -8,11 +8,32 @@ class cabinet extends ACore
             $userID = $_SESSION['userID'];
             $new_login = trim($_POST['user_login']);
             $new_pswd = $_POST['user_pswd'] === '' ? '' : md5(trim($_POST['user_pswd']));
+            $model = $_FILES['user_model'];
+            if (!empty($model['tmp_name'])) {
+                if (!move_uploaded_file($model['tmp_name'], 'file/' . $model['name'])) {
+                    echo '<div class="alert alert-danger alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>Не удалось загрузить модель!</strong>
+                </div>';
+                }
+                $model_src = 'file/' . $model['name'];
+            }
             if ($new_login !== '') {
                 if ($new_pswd != '') {
-                    $query = "UPDATE users SET login='$new_login' password='$new_pswd' WHERE u_id='$userID'";
+                    if(!empty($model_src)){
+                        $query = "UPDATE users SET login='$new_login', password='$new_pswd', model='$model_src' WHERE u_id='$userID'";
+                    }else{
+                        $query = "UPDATE users SET login='$new_login', password='$new_pswd' WHERE u_id='$userID'";
+                    }
+
                 } else {
-                    $query = "UPDATE users SET login='$new_login' WHERE u_id='$userID'";
+                    if(!empty($model_src)){
+                        $query = "UPDATE users SET login='$new_login', model='$model_src' WHERE u_id='$userID'";
+                    } else {
+                        $query = "UPDATE users SET login='$new_login' WHERE u_id='$userID'";
+                    }
                 }
                 if (!mysql_query($query)) {
                     exit(mysql_error());
@@ -41,7 +62,7 @@ class cabinet extends ACore
 
         $userID = $_SESSION['userID'];
         if ($userID) {
-            $query = "SELECT u_id, login, password FROM users WHERE u_id='$userID'";
+            $query = "SELECT u_id, login, password, model FROM users WHERE u_id='$userID'";
             $result = mysql_query($query);
             if (!$result) {
                 exit(mysql_error());
@@ -51,12 +72,15 @@ class cabinet extends ACore
                 for ($i = 0; $i < mysql_num_rows($result); $i++) {
                     $arResult = mysql_fetch_array($result, MYSQL_ASSOC);
                     ?>
-                    <form id="userProfile" method="post" class="user-card col-md-5">
+                    <form id="userProfile" method="post" class="user-card col-md-5" enctype="multipart/form-data">
                         <label for="user_login">Логин</label>
                         <input id="user_login" name="user_login" class="user-login form-control" type="text"
                                value="<?= $arResult['login'] ?>" disabled>
                         <label for="user_pswd">Пароль</label>
                         <input id="user_pswd" name="user_pswd" value="" class="user-pswd form-control" type="password"
+                               disabled>
+                        <label for="user_model">Пароль</label>
+                        <input id="user_model" name="user_model" value="" class="user-model form-control" type="file" value="<? $arResult['model']?>" accept="wrl"
                                disabled>
                         <button name="edit" class="edit">Редактировать</button>
                         <button name="save" class="save" type="submit" disabled>Сохранить</button>
@@ -95,6 +119,13 @@ class cabinet extends ACore
                     <?
                 }
                 echo '</table></div>';
+                if(!empty($arResult['model'])){
+                    echo '<div class="model col-md-12">';
+                    echo '<object DATA="'.$arResult['model'].'" TYPE="model/vrml">
+                    <param name="SRC" VALUE="'.$arResult['model'].'"></object> ';
+                    echo '</div>';
+                }
+                echo '<div class="clearfix"></div>';
             }
         } else {
             echo '<div class="alert alert-danger alert-dismissible fade in" role="alert">
